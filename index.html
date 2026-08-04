@@ -1,0 +1,1318 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>مدیریت پرداخت آنلاین - با حساب‌ها</title>
+  <!-- Font Awesome (icons) -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+    body {
+      background: #f4f7fc;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 20px;
+      padding: 10px;
+    }
+    .app-container {
+      max-width: 1200px;
+      width: 100%;
+      background: white;
+      border-radius: 24px;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.1);
+      padding: 25px 30px 35px;
+      transition: all 0.2s;
+    }
+    h1 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #1e293b;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 2px solid #e9edf4;
+      padding-bottom: 18px;
+      margin-top: 0;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      gap: 15px;
+    }
+    .header-left {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+    .btn-primary {
+      background: #2a6df4;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 8px rgba(42, 109, 244, 0.3);
+      border: 1px solid transparent;
+    }
+    .btn-primary:hover {
+      background: #1a56d4;
+      transform: scale(1.02);
+      box-shadow: 0 8px 14px rgba(42, 109, 244, 0.35);
+    }
+    .btn-primary i {
+      font-size: 1.1rem;
+    }
+    .btn-success {
+      background: #10b981;
+      border: none;
+      color: white;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
+      border: 1px solid transparent;
+    }
+    .btn-success:hover {
+      background: #059669;
+      transform: scale(1.02);
+    }
+    .btn-secondary {
+      background: #e9edf4;
+      border: none;
+      color: #1e293b;
+      padding: 12px 28px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .btn-secondary:hover {
+      background: #d5dce6;
+    }
+    .btn-danger {
+      background: #ef4444;
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-left: 6px;
+    }
+    .btn-danger:hover {
+      background: #dc2626;
+      transform: scale(1.05);
+    }
+    .btn-edit {
+      background: #f59e0b;
+      border: none;
+      color: white;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      cursor: pointer;
+      transition: 0.2s;
+      margin-left: 6px;
+    }
+    .btn-edit:hover {
+      background: #d97706;
+      transform: scale(1.05);
+    }
+    .btn-account {
+      background: #8b5cf6;
+      border: none;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 40px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: 0.2s;
+      box-shadow: 0 4px 8px rgba(139, 92, 246, 0.3);
+      border: 1px solid transparent;
+    }
+    .btn-account:hover {
+      background: #7c3aed;
+      transform: scale(1.02);
+      box-shadow: 0 8px 14px rgba(139, 92, 246, 0.35);
+    }
+    .btn-datepicker {
+      background: #f1f5f9;
+      border: 1.5px solid #dbe0e8;
+      color: #1e293b;
+      padding: 10px 16px;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      cursor: pointer;
+      transition: 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      width: 100%;
+      justify-content: flex-start;
+    }
+    .btn-datepicker:hover {
+      background: #e2e8f0;
+      border-color: #2a6df4;
+    }
+    .btn-datepicker i {
+      color: #2a6df4;
+      font-size: 1.1rem;
+    }
+    /* فرم overlay */
+    .form-overlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0,0,0,0.4);
+      backdrop-filter: blur(4px);
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+      padding: 20px;
+    }
+    .form-overlay.active {
+      display: flex;
+    }
+    .form-card {
+      background: white;
+      border-radius: 28px;
+      padding: 32px 35px;
+      max-width: 550px;
+      width: 100%;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.25);
+      animation: fadeUp 0.25s ease;
+    }
+    @keyframes fadeUp {
+      0% { opacity: 0.5; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    .form-card h2 {
+      font-size: 1.6rem;
+      margin-top: 0;
+      margin-bottom: 22px;
+      color: #0f172a;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .form-group {
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-weight: 500;
+      margin-bottom: 6px;
+      color: #334155;
+      font-size: 0.95rem;
+    }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      padding: 12px 16px;
+      border: 1.5px solid #dbe0e8;
+      border-radius: 18px;
+      font-size: 1rem;
+      background: #fafcff;
+      transition: 0.15s;
+      outline: none;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: #2a6df4;
+      box-shadow: 0 0 0 4px rgba(42, 109, 244, 0.15);
+      background: white;
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 70px;
+    }
+    .form-group select {
+      appearance: auto;
+      cursor: pointer;
+    }
+    .form-row {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+    }
+    .form-row .form-group {
+      flex: 1 1 45%;
+    }
+    .form-actions {
+      display: flex;
+      justify-content: flex-end;
+      gap: 14px;
+      margin-top: 28px;
+      border-top: 1px solid #eef2f6;
+      padding-top: 24px;
+    }
+    /* جستجو و مجموع */
+    .search-section {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+      padding: 15px;
+      background: #f8fafc;
+      border-radius: 16px;
+      align-items: center;
+    }
+    .search-box {
+      flex: 1;
+      min-width: 180px;
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+    .search-box input, .search-box .btn-datepicker, .search-box select {
+      padding: 10px 16px;
+      border: 1.5px solid #dbe0e8;
+      border-radius: 18px;
+      font-size: 0.95rem;
+      background: white;
+      outline: none;
+      transition: 0.15s;
+      width: 100%;
+    }
+    .search-box input:focus, .search-box select:focus {
+      border-color: #2a6df4;
+      box-shadow: 0 0 0 3px rgba(42, 109, 244, 0.1);
+    }
+    .search-box .btn-datepicker {
+      background: white;
+      cursor: pointer;
+      justify-content: flex-start;
+    }
+    .search-box .btn-datepicker:hover {
+      background: #f8fafc;
+      border-color: #2a6df4;
+    }
+    .total-sum {
+      background: linear-gradient(135deg, #2a6df4, #1a56d4);
+      color: white;
+      padding: 10px 24px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 4px 12px rgba(42, 109, 244, 0.3);
+    }
+    .total-sum span {
+      font-size: 1.3rem;
+    }
+    /* جدول */
+    .table-wrapper {
+      overflow-x: auto;
+      margin-top: 10px;
+      border-radius: 18px;
+      border: 1px solid #eef2f6;
+      background: #fafcff;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.95rem;
+    }
+    th {
+      text-align: right;
+      padding: 18px 16px;
+      background: #f1f5f9;
+      color: #1e293b;
+      font-weight: 600;
+      border-bottom: 2px solid #dce2ec;
+    }
+    td {
+      padding: 16px;
+      border-bottom: 1px solid #eaeef5;
+      color: #1e293b;
+      vertical-align: middle;
+    }
+    tr:last-child td {
+      border-bottom: none;
+    }
+    .empty-row td {
+      text-align: center;
+      color: #94a3b8;
+      padding: 40px 0;
+      font-size: 1rem;
+    }
+    .badge-account {
+      background: #dbeafe;
+      color: #1e4b7a;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+    .badge-account-purple {
+      background: #ede9fe;
+      color: #5b21b6;
+      padding: 4px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      display: inline-block;
+    }
+    .text-muted {
+      color: #64748b;
+    }
+    .actions-cell {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+    }
+    .amount-display {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      direction: ltr;
+      display: inline-block;
+    }
+    /* ریسپانسیو */
+    @media (max-width: 700px) {
+      .app-container { padding: 18px; }
+      .form-card { padding: 24px 18px; }
+      .form-row .form-group { flex: 1 1 100%; }
+      .btn-primary, .btn-account { padding: 10px 18px; font-size: 0.9rem; }
+      .actions-cell { flex-direction: column; align-items: flex-start; }
+      .search-section { flex-direction: column; align-items: stretch; }
+      .total-sum { justify-content: center; }
+      .header-left { width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="app-container">
+
+  <h1>
+    <span>📋 مدیریت پرداخت آنلاین</span>
+    <div class="header-left">
+      <button class="btn-account" id="openAccountBtn">
+        <i class="fas fa-university"></i> افزودن حساب
+      </button>
+      <button class="btn-primary" id="openFormBtn">
+        <i class="fas fa-plus-circle"></i> ثبت پرداخت +
+      </button>
+    </div>
+  </h1>
+
+  <!-- بخش جستجو و مجموع -->
+  <div class="search-section">
+    <div class="search-box">
+      <i class="fas fa-search" style="color: #94a3b8;"></i>
+      <input type="text" id="searchInput" placeholder="جستجو در پرداخت‌ها..." />
+    </div>
+    <div class="search-box">
+      <i class="fas fa-arrow-right" style="color: #8b5cf6;"></i>
+      <select id="searchFromAccount">
+        <option value="">همه حساب‌های مبدأ</option>
+      </select>
+    </div>
+    <div class="search-box">
+      <i class="fas fa-arrow-left" style="color: #8b5cf6;"></i>
+      <select id="searchToAccount">
+        <option value="">همه حساب‌های مقصد</option>
+      </select>
+    </div>
+    <div class="search-box">
+      <i class="fas fa-calendar-alt" style="color: #94a3b8;"></i>
+      <button class="btn-datepicker" id="dateSearchPicker">
+        <i class="fas fa-calendar-day"></i>
+        <span id="dateSearchDisplay">انتخاب تاریخ</span>
+      </button>
+    </div>
+    <div class="total-sum">
+      <i class="fas fa-wallet"></i>
+      مجموع: <span id="totalAmount">۰</span> تومان
+    </div>
+  </div>
+
+  <!-- جدول نمایش پرداخت‌ها -->
+  <div class="table-wrapper">
+    <table id="paymentTable">
+      <thead>
+        <tr>
+          <th>تاریخ (شمسی)</th>
+          <th>مبلغ (تومان)</th>
+          <th>از حساب</th>
+          <th>به حساب</th>
+          <th>توضیحات</th>
+          <th>عملیات</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <tr class="empty-row"><td colspan="6">در حال بارگذاری...</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<!-- ====== فرم پرداخت ====== -->
+<div class="form-overlay" id="formOverlay">
+  <div class="form-card">
+    <h2 id="formTitle"><i class="fas fa-wallet" style="color: #2a6df4;"></i> ثبت پرداخت جدید</h2>
+    <form id="paymentForm">
+      <div class="form-group">
+        <label for="datePickerBtn"><i class="far fa-calendar-alt"></i> تاریخ (شمسی)</label>
+        <button type="button" class="btn-datepicker" id="datePickerBtn">
+          <i class="fas fa-calendar-day"></i>
+          <span id="dateDisplay">انتخاب تاریخ</span>
+        </button>
+        <input type="hidden" id="dateInput" />
+      </div>
+
+      <div class="form-group">
+        <label for="amountInput"><i class="fas fa-toman-sign"></i> مقدار پرداخت (تومان)</label>
+        <input type="text" id="amountInput" placeholder="مبلغ به تومان" style="direction: ltr; text-align: left;" />
+        <small style="color: #6b7a8f; display: block; margin-top: 5px;">اعداد انگلیسی با کاما جدا می‌شوند (مثال: 1,250,000)</small>
+      </div>
+
+      <div class="form-row">
+        <div class="form-group">
+          <label for="fromAccountSelect"><i class="fas fa-arrow-right"></i> از حساب</label>
+          <select id="fromAccountSelect" required>
+            <option value="">انتخاب حساب مبدأ</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="toAccountSelect"><i class="fas fa-arrow-left"></i> به حساب</label>
+          <select id="toAccountSelect" required>
+            <option value="">انتخاب حساب مقصد</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label for="descInput"><i class="fas fa-pen"></i> توضیحات</label>
+        <textarea id="descInput" placeholder="توضیحات (اختیاری)"></textarea>
+      </div>
+
+      <div class="form-actions">
+        <button type="button" class="btn-secondary" id="cancelFormBtn">لغو</button>
+        <button type="submit" class="btn-success" id="submitBtn"><i class="fas fa-check"></i> ثبت پرداخت</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- ====== فرم مدیریت حساب ====== -->
+<div class="form-overlay" id="accountFormOverlay">
+  <div class="form-card">
+    <h2 id="accountFormTitle"><i class="fas fa-university" style="color: #8b5cf6;"></i> مدیریت حساب‌ها</h2>
+    
+    <!-- فرم افزودن حساب -->
+    <form id="accountForm">
+      <div class="form-group">
+        <label for="accountNameInput"><i class="fas fa-user"></i> نام حساب</label>
+        <input type="text" id="accountNameInput" placeholder="مثال: بانک ملت" required />
+      </div>
+      <div class="form-actions" style="border-top: none; padding-top: 0;">
+        <button type="button" class="btn-secondary" id="cancelAccountBtn">بستن</button>
+        <button type="submit" class="btn-success" id="accountSubmitBtn"><i class="fas fa-plus"></i> افزودن حساب</button>
+      </div>
+    </form>
+
+    <!-- جدول حساب‌ها -->
+    <div style="margin-top: 25px; border-top: 2px solid #eef2f6; padding-top: 20px;">
+      <h3 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 15px; color: #1e293b;">
+        <i class="fas fa-list"></i> لیست حساب‌ها
+      </h3>
+      <div class="table-wrapper" style="border: 1px solid #eef2f6;">
+        <table>
+          <thead>
+            <tr>
+              <th>ردیف</th>
+              <th>نام حساب</th>
+              <th>عملیات</th>
+            </tr>
+          </thead>
+          <tbody id="accountTableBody">
+            <tr class="empty-row"><td colspan="3">هیچ حسابی ثبت نشده است</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase SDK -->
+<script type="module">
+  // Import Firebase SDK
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
+  import { getDatabase, ref, onValue, push, remove, update, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
+
+  // Firebase Config
+  const firebaseConfig = {
+    apiKey: "AIzaSyBSkYRVAvxlLfVG0FPeM0wkiZsjf0zolJ8",
+    authDomain: "profile-messenger-fc66d.firebaseapp.com",
+    databaseURL: "https://profile-messenger-fc66d-default-rtdb.firebaseio.com",
+    projectId: "profile-messenger-fc66d",
+    storageBucket: "profile-messenger-fc66d.firebasestorage.app",
+    messagingSenderId: "553692170512",
+    appId: "1:553692170512:web:9c5f8ab0c3be8e16adbd95",
+    measurementId: "G-8G4BZ00P49"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const database = getDatabase(app);
+  const paymentsRef = ref(database, 'payments');
+  const accountsRef = ref(database, 'accounts');
+
+  // ---------- DOM Elements ----------
+  // Payment form
+  const openFormBtn = document.getElementById('openFormBtn');
+  const formOverlay = document.getElementById('formOverlay');
+  const cancelFormBtn = document.getElementById('cancelFormBtn');
+  const paymentForm = document.getElementById('paymentForm');
+  const tableBody = document.getElementById('tableBody');
+  const formTitle = document.getElementById('formTitle');
+  const submitBtn = document.getElementById('submitBtn');
+  const searchInput = document.getElementById('searchInput');
+  const searchFromAccount = document.getElementById('searchFromAccount');
+  const searchToAccount = document.getElementById('searchToAccount');
+  const dateSearchPicker = document.getElementById('dateSearchPicker');
+  const dateSearchDisplay = document.getElementById('dateSearchDisplay');
+  const totalAmountSpan = document.getElementById('totalAmount');
+  const datePickerBtn = document.getElementById('datePickerBtn');
+  const dateDisplay = document.getElementById('dateDisplay');
+  const dateInput = document.getElementById('dateInput');
+  const amountInput = document.getElementById('amountInput');
+  const fromAccountSelect = document.getElementById('fromAccountSelect');
+  const toAccountSelect = document.getElementById('toAccountSelect');
+  const descInput = document.getElementById('descInput');
+
+  // Account form
+  const openAccountBtn = document.getElementById('openAccountBtn');
+  const accountFormOverlay = document.getElementById('accountFormOverlay');
+  const cancelAccountBtn = document.getElementById('cancelAccountBtn');
+  const accountForm = document.getElementById('accountForm');
+  const accountNameInput = document.getElementById('accountNameInput');
+  const accountSubmitBtn = document.getElementById('accountSubmitBtn');
+  const accountFormTitle = document.getElementById('accountFormTitle');
+  const accountTableBody = document.getElementById('accountTableBody');
+
+  // ---------- State ----------
+  let allPayments = [];
+  let filteredPayments = [];
+  let editKey = null;
+  let selectedSearchDate = '';
+  let accounts = [];
+  let editAccountKey = null;
+
+  // ---------- Helper Functions ----------
+  function getTodayShamsi() {
+    const now = new Date();
+    const formatter = new Intl.DateTimeFormat('fa-IR', {
+      year: 'numeric',
+      month: '2-digit',
+      day: '2-digit',
+    });
+    const parts = formatter.formatToParts(now);
+    let year, month, day;
+    for (let p of parts) {
+      if (p.type === 'year') year = p.value;
+      else if (p.type === 'month') month = p.value;
+      else if (p.type === 'day') day = p.value;
+    }
+    return `${year}-${month}-${day}`;
+  }
+
+  function formatShamsiDisplay(shamsiDate) {
+    if (!shamsiDate) return '';
+    const parts = shamsiDate.split('-');
+    if (parts.length === 3) {
+      return `${parts[0]}/${parts[1]}/${parts[2]}`;
+    }
+    return shamsiDate;
+  }
+
+  function toPersianNumbers(str) {
+    const persianDigits = {
+      '0': '۰', '1': '۱', '2': '۲', '3': '۳', '4': '۴',
+      '5': '۵', '6': '۶', '7': '۷', '8': '۸', '9': '۹'
+    };
+    return str.replace(/[0-9]/g, m => persianDigits[m]);
+  }
+
+  function formatNumberWithCommasEnglish(num) {
+    if (isNaN(num) || num === null || num === undefined) return '0';
+    return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
+
+  function formatNumberWithCommasPersian(num) {
+    if (isNaN(num) || num === null || num === undefined) return '۰';
+    const englishFormatted = formatNumberWithCommasEnglish(num);
+    return toPersianNumbers(englishFormatted);
+  }
+
+  function parseAmount(str) {
+    if (!str) return 0;
+    const persianToEnglish = {
+      '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+      '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9'
+    };
+    let englishStr = str.replace(/[۰-۹]/g, m => persianToEnglish[m]);
+    const cleaned = englishStr.replace(/[^\d]/g, '');
+    return parseInt(cleaned, 10) || 0;
+  }
+
+  function formatAmountDisplay(amount) {
+    return formatNumberWithCommasPersian(amount);
+  }
+
+  // ---------- Initialize Datepicker ----------
+  function initDatepicker(button, displayElement, inputElement, onSelect) {
+    const nativeDateInput = document.createElement('input');
+    nativeDateInput.type = 'date';
+    nativeDateInput.style.position = 'absolute';
+    nativeDateInput.style.opacity = '0';
+    nativeDateInput.style.pointerEvents = 'none';
+    nativeDateInput.style.width = '1px';
+    nativeDateInput.style.height = '1px';
+    button.parentElement.style.position = 'relative';
+    button.parentElement.appendChild(nativeDateInput);
+
+    button.addEventListener('click', function(e) {
+      e.preventDefault();
+      nativeDateInput.showPicker ? nativeDateInput.showPicker() : nativeDateInput.click();
+    });
+
+    nativeDateInput.addEventListener('change', function() {
+      if (this.value) {
+        const date = new Date(this.value + 'T00:00:00');
+        const formatter = new Intl.DateTimeFormat('fa-IR', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+        });
+        const parts = formatter.formatToParts(date);
+        let year, month, day;
+        for (let p of parts) {
+          if (p.type === 'year') year = p.value;
+          else if (p.type === 'month') month = p.value;
+          else if (p.type === 'day') day = p.value;
+        }
+        const shamsiDate = `${year}-${month}-${day}`;
+        displayElement.textContent = formatShamsiDisplay(shamsiDate);
+        if (inputElement) {
+          inputElement.value = shamsiDate;
+        }
+        if (onSelect) {
+          onSelect(shamsiDate);
+        }
+      }
+    });
+
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+    nativeDateInput.value = `${year}-${month}-${day}`;
+    
+    setTimeout(() => {
+      nativeDateInput.dispatchEvent(new Event('change'));
+    }, 100);
+
+    return nativeDateInput;
+  }
+
+  // ---------- Account Management ----------
+  function loadAccounts() {
+    onValue(accountsRef, (snapshot) => {
+      const data = snapshot.val();
+      accounts = [];
+      if (data) {
+        for (const key in data) {
+          accounts.push({
+            key: key,
+            name: data[key].name
+          });
+        }
+      }
+      // Sort accounts by name
+      accounts.sort((a, b) => a.name.localeCompare(b.name));
+      updateAccountSelects();
+      renderAccountTable();
+    });
+  }
+
+  function updateAccountSelects() {
+    // Update from account select
+    const currentFrom = fromAccountSelect.value;
+    fromAccountSelect.innerHTML = '<option value="">انتخاب حساب مبدأ</option>';
+    accounts.forEach(acc => {
+      const option = document.createElement('option');
+      option.value = acc.name;
+      option.textContent = acc.name;
+      fromAccountSelect.appendChild(option);
+    });
+    if (currentFrom && accounts.some(a => a.name === currentFrom)) {
+      fromAccountSelect.value = currentFrom;
+    }
+
+    // Update to account select
+    const currentTo = toAccountSelect.value;
+    toAccountSelect.innerHTML = '<option value="">انتخاب حساب مقصد</option>';
+    accounts.forEach(acc => {
+      const option = document.createElement('option');
+      option.value = acc.name;
+      option.textContent = acc.name;
+      toAccountSelect.appendChild(option);
+    });
+    if (currentTo && accounts.some(a => a.name === currentTo)) {
+      toAccountSelect.value = currentTo;
+    }
+
+    // Update search selects
+    const currentSearchFrom = searchFromAccount.value;
+    searchFromAccount.innerHTML = '<option value="">همه حساب‌های مبدأ</option>';
+    accounts.forEach(acc => {
+      const option = document.createElement('option');
+      option.value = acc.name;
+      option.textContent = acc.name;
+      searchFromAccount.appendChild(option);
+    });
+    if (currentSearchFrom && accounts.some(a => a.name === currentSearchFrom)) {
+      searchFromAccount.value = currentSearchFrom;
+    }
+
+    const currentSearchTo = searchToAccount.value;
+    searchToAccount.innerHTML = '<option value="">همه حساب‌های مقصد</option>';
+    accounts.forEach(acc => {
+      const option = document.createElement('option');
+      option.value = acc.name;
+      option.textContent = acc.name;
+      searchToAccount.appendChild(option);
+    });
+    if (currentSearchTo && accounts.some(a => a.name === currentSearchTo)) {
+      searchToAccount.value = currentSearchTo;
+    }
+  }
+
+  function renderAccountTable() {
+    accountTableBody.innerHTML = '';
+    if (accounts.length === 0) {
+      accountTableBody.innerHTML = `<tr class="empty-row"><td colspan="3">هیچ حسابی ثبت نشده است</td></tr>`;
+      return;
+    }
+
+    accounts.forEach((acc, index) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+        <td>${index + 1}</td>
+        <td><span class="badge-account-purple">${acc.name}</span></td>
+        <td>
+          <div class="actions-cell">
+            <button class="btn-edit" data-key="${acc.key}"><i class="fas fa-edit"></i> ویرایش</button>
+            <button class="btn-danger" data-key="${acc.key}"><i class="fas fa-trash-alt"></i> حذف</button>
+          </div>
+        </td>
+      `;
+      accountTableBody.appendChild(tr);
+    });
+
+    // Attach event listeners
+    document.querySelectorAll('#accountTableBody .btn-edit').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const key = this.dataset.key;
+        const account = accounts.find(a => a.key === key);
+        if (account) {
+          editAccountKey = key;
+          accountNameInput.value = account.name;
+          accountSubmitBtn.innerHTML = '<i class="fas fa-save"></i> بروزرسانی';
+          accountSubmitBtn.className = 'btn-edit';
+          accountSubmitBtn.style.background = '#f59e0b';
+          accountSubmitBtn.style.boxShadow = '0 4px 8px rgba(245, 158, 11, 0.3)';
+          accountFormTitle.innerHTML = '<i class="fas fa-edit" style="color: #f59e0b;"></i> ویرایش حساب';
+        }
+      });
+    });
+
+    document.querySelectorAll('#accountTableBody .btn-danger').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const key = this.dataset.key;
+        if (confirm('آیا از حذف این حساب اطمینان دارید؟')) {
+          deleteAccount(key);
+        }
+      });
+    });
+  }
+
+  async function addAccount(accountName) {
+    try {
+      const newRef = push(accountsRef);
+      await set(newRef, {
+        name: accountName,
+        createdAt: serverTimestamp()
+      });
+      return true;
+    } catch (error) {
+      console.error('Error adding account:', error);
+      alert('خطا در افزودن حساب. لطفاً دوباره تلاش کنید.');
+      return false;
+    }
+  }
+
+  async function updateAccount(key, accountName) {
+    try {
+      const accountRef = ref(database, `accounts/${key}`);
+      await update(accountRef, {
+        name: accountName,
+        updatedAt: serverTimestamp()
+      });
+      return true;
+    } catch (error) {
+      console.error('Error updating account:', error);
+      alert('خطا در بروزرسانی حساب. لطفاً دوباره تلاش کنید.');
+      return false;
+    }
+  }
+
+  async function deleteAccount(key) {
+    try {
+      const accountRef = ref(database, `accounts/${key}`);
+      await remove(accountRef);
+      return true;
+    } catch (error) {
+      console.error('Error deleting account:', error);
+      alert('خطا در حذف حساب. لطفاً دوباره تلاش کنید.');
+      return false;
+    }
+  }
+
+  // ---------- Account Form Submit ----------
+  async function handleAccountSubmit(event) {
+    event.preventDefault();
+    const name = accountNameInput.value.trim();
+    if (!name) {
+      alert('لطفاً نام حساب را وارد کنید.');
+      return;
+    }
+
+    // Check for duplicate
+    if (accounts.some(a => a.name === name && a.key !== editAccountKey)) {
+      alert('این نام حساب قبلاً ثبت شده است.');
+      return;
+    }
+
+    accountSubmitBtn.disabled = true;
+    accountSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
+
+    let success = false;
+    if (editAccountKey !== null) {
+      success = await updateAccount(editAccountKey, name);
+    } else {
+      success = await addAccount(name);
+    }
+
+    accountSubmitBtn.disabled = false;
+    if (success) {
+      accountNameInput.value = '';
+      editAccountKey = null;
+      accountSubmitBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن حساب';
+      accountSubmitBtn.className = 'btn-success';
+      accountSubmitBtn.style.background = '';
+      accountSubmitBtn.style.boxShadow = '';
+      accountFormTitle.innerHTML = '<i class="fas fa-university" style="color: #8b5cf6;"></i> مدیریت حساب‌ها';
+    } else {
+      accountSubmitBtn.innerHTML = editAccountKey !== null ? 
+        '<i class="fas fa-save"></i> بروزرسانی' : 
+        '<i class="fas fa-plus"></i> افزودن حساب';
+    }
+  }
+
+  // ---------- Payment Functions ----------
+  function renderTable(paymentsToShow = null) {
+    const data = paymentsToShow || filteredPayments;
+    tableBody.innerHTML = '';
+    
+    if (!data || data.length === 0) {
+      tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">هیچ پرداختی یافت نشد</td></tr>`;
+      updateTotal(data || []);
+      return;
+    }
+
+    const sorted = [...data].reverse();
+    for (let item of sorted) {
+      const tr = document.createElement('tr');
+      const p = item.data;
+      const key = item.key;
+
+      tr.innerHTML = `
+        <td><span style="font-weight: 500;">${p.date || '—'}</span></td>
+        <td><span style="color: #0b3b5c; font-weight: 600; direction: ltr; display: inline-block;">${formatAmountDisplay(p.amount)}</span></td>
+        <td><span class="badge-account">${p.fromAccount || '—'}</span></td>
+        <td><span class="badge-account" style="background:#e0f2fe;">${p.toAccount || '—'}</span></td>
+        <td style="max-width: 150px; word-break: break-word;">${p.description || ''}</td>
+        <td>
+          <div class="actions-cell">
+            <button class="btn-edit" data-key="${key}"><i class="fas fa-edit"></i> ویرایش</button>
+            <button class="btn-danger" data-key="${key}"><i class="fas fa-trash-alt"></i> حذف</button>
+          </div>
+        </td>
+      `;
+      tableBody.appendChild(tr);
+    }
+
+    document.querySelectorAll('.btn-edit').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const key = this.dataset.key;
+        openEditForm(key);
+      });
+    });
+
+    document.querySelectorAll('.btn-danger').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const key = this.dataset.key;
+        if (confirm('آیا از حذف این پرداخت اطمینان دارید؟')) {
+          deletePayment(key);
+        }
+      });
+    });
+
+    updateTotal(data);
+  }
+
+  function updateTotal(paymentsData) {
+    const total = paymentsData.reduce((sum, item) => sum + (item.data.amount || 0), 0);
+    totalAmountSpan.textContent = formatNumberWithCommasPersian(total);
+  }
+
+  function filterPayments() {
+    const searchText = searchInput.value.trim().toLowerCase();
+    const dateSearchText = selectedSearchDate;
+    const fromAccountFilter = searchFromAccount.value;
+    const toAccountFilter = searchToAccount.value;
+
+    filteredPayments = allPayments.filter(item => {
+      const p = item.data;
+      let matches = true;
+
+      if (searchText) {
+        const searchable = [
+          p.fromAccount || '',
+          p.toAccount || '',
+          p.description || '',
+          p.date || ''
+        ].join(' ').toLowerCase();
+        matches = matches && searchable.includes(searchText);
+      }
+
+      if (dateSearchText) {
+        matches = matches && (p.date || '').includes(dateSearchText);
+      }
+
+      if (fromAccountFilter) {
+        matches = matches && (p.fromAccount || '') === fromAccountFilter;
+      }
+
+      if (toAccountFilter) {
+        matches = matches && (p.toAccount || '') === toAccountFilter;
+      }
+
+      return matches;
+    });
+
+    renderTable(filteredPayments);
+  }
+
+  function loadPayments() {
+    onValue(paymentsRef, (snapshot) => {
+      const data = snapshot.val();
+      allPayments = [];
+      if (data) {
+        for (const key in data) {
+          allPayments.push({
+            key: key,
+            data: data[key]
+          });
+        }
+      }
+      searchInput.value = '';
+      selectedSearchDate = '';
+      dateSearchDisplay.textContent = 'انتخاب تاریخ';
+      searchFromAccount.value = '';
+      searchToAccount.value = '';
+      filteredPayments = [...allPayments];
+      renderTable(filteredPayments);
+    }, (error) => {
+      console.error('Error loading payments:', error);
+      tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">خطا در اتصال به سرور</td></tr>`;
+    });
+  }
+
+  async function addPayment(paymentData) {
+    try {
+      const newRef = push(paymentsRef);
+      await set(newRef, {
+        ...paymentData,
+        createdAt: serverTimestamp()
+      });
+      return true;
+    } catch (error) {
+      console.error('Error adding payment:', error);
+      alert('خطا در ثبت پرداخت. لطفاً دوباره تلاش کنید.');
+      return false;
+    }
+  }
+
+  async function updatePayment(key, paymentData) {
+    try {
+      const paymentRef = ref(database, `payments/${key}`);
+      await update(paymentRef, {
+        ...paymentData,
+        updatedAt: serverTimestamp()
+      });
+      return true;
+    } catch (error) {
+      console.error('Error updating payment:', error);
+      alert('خطا در بروزرسانی. لطفاً دوباره تلاش کنید.');
+      return false;
+    }
+  }
+
+  async function deletePayment(key) {
+    try {
+      const paymentRef = ref(database, `payments/${key}`);
+      await remove(paymentRef);
+      return true;
+    } catch (error) {
+      console.error('Error deleting payment:', error);
+      alert('خطا در حذف. لطفاً دوباره تلاش کنید.');
+      return false;
+    }
+  }
+
+  // ---------- Form Handlers ----------
+  function openEditForm(key) {
+    const item = allPayments.find(p => p.key === key);
+    if (!item) return;
+
+    editKey = key;
+    const payment = item.data;
+
+    if (payment.date) {
+      dateDisplay.textContent = formatShamsiDisplay(payment.date);
+      dateInput.value = payment.date;
+    }
+
+    amountInput.value = formatNumberWithCommasEnglish(payment.amount || 0);
+    
+    // Set account selects
+    if (payment.fromAccount && accounts.some(a => a.name === payment.fromAccount)) {
+      fromAccountSelect.value = payment.fromAccount;
+    }
+    if (payment.toAccount && accounts.some(a => a.name === payment.toAccount)) {
+      toAccountSelect.value = payment.toAccount;
+    }
+    
+    descInput.value = payment.description || '';
+
+    formTitle.innerHTML = `<i class="fas fa-edit" style="color: #f59e0b;"></i> ویرایش پرداخت`;
+    submitBtn.innerHTML = `<i class="fas fa-save"></i> بروزرسانی`;
+    submitBtn.className = 'btn-edit';
+    submitBtn.style.background = '#f59e0b';
+    submitBtn.style.boxShadow = '0 4px 8px rgba(245, 158, 11, 0.3)';
+
+    formOverlay.classList.add('active');
+  }
+
+  function resetFormToAdd() {
+    editKey = null;
+    const today = getTodayShamsi();
+    dateDisplay.textContent = formatShamsiDisplay(today);
+    dateInput.value = today;
+    amountInput.value = '';
+    fromAccountSelect.value = '';
+    toAccountSelect.value = '';
+    descInput.value = '';
+    formTitle.innerHTML = `<i class="fas fa-wallet" style="color: #2a6df4;"></i> ثبت پرداخت جدید`;
+    submitBtn.innerHTML = `<i class="fas fa-check"></i> ثبت پرداخت`;
+    submitBtn.className = 'btn-success';
+    submitBtn.style.background = '';
+    submitBtn.style.boxShadow = '';
+  }
+
+  function closeForm() {
+    formOverlay.classList.remove('active');
+    resetFormToAdd();
+  }
+
+  function closeAccountForm() {
+    accountFormOverlay.classList.remove('active');
+    accountNameInput.value = '';
+    editAccountKey = null;
+    accountSubmitBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن حساب';
+    accountSubmitBtn.className = 'btn-success';
+    accountSubmitBtn.style.background = '';
+    accountSubmitBtn.style.boxShadow = '';
+    accountFormTitle.innerHTML = '<i class="fas fa-university" style="color: #8b5cf6;"></i> مدیریت حساب‌ها';
+  }
+
+  // ---------- Form Submit ----------
+  async function handleFormSubmit(event) {
+    event.preventDefault();
+
+    const dateVal = dateInput.value.trim();
+    const amountRaw = amountInput.value.trim();
+    const fromVal = fromAccountSelect.value;
+    const toVal = toAccountSelect.value;
+    const descVal = descInput.value.trim();
+
+    if (!dateVal) { alert('لطفاً تاریخ را انتخاب کنید.'); return; }
+    
+    const amountNum = parseAmount(amountRaw);
+    if (!amountNum || amountNum <= 0) {
+      alert('لطفاً مبلغ معتبر (تومان) وارد کنید.');
+      return;
+    }
+    if (!fromVal) { alert('لطفاً "از حساب" را انتخاب کنید.'); return; }
+    if (!toVal) { alert('لطفاً "به حساب" را انتخاب کنید.'); return; }
+    if (fromVal === toVal) {
+      alert('حساب مبدأ و مقصد نمی‌توانند یکسان باشند.');
+      return;
+    }
+
+    const paymentData = {
+      date: dateVal,
+      amount: amountNum,
+      fromAccount: fromVal,
+      toAccount: toVal,
+      description: descVal,
+    };
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
+
+    let success = false;
+    if (editKey !== null) {
+      success = await updatePayment(editKey, paymentData);
+    } else {
+      success = await addPayment(paymentData);
+    }
+
+    submitBtn.disabled = false;
+    if (success) {
+      closeForm();
+    } else {
+      submitBtn.innerHTML = editKey !== null ? 
+        '<i class="fas fa-save"></i> بروزرسانی' : 
+        '<i class="fas fa-check"></i> ثبت پرداخت';
+    }
+  }
+
+  // ---------- Amount Input Handler ----------
+  function handleAmountInput(e) {
+    const input = e.target;
+    let rawValue = input.value;
+    
+    const persianToEnglishMap = {
+      '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+      '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9'
+    };
+    rawValue = rawValue.replace(/[۰-۹]/g, m => persianToEnglishMap[m]);
+    
+    const digitsOnly = rawValue.replace(/[^\d]/g, '');
+    const num = parseInt(digitsOnly, 10) || 0;
+    const formatted = formatNumberWithCommasEnglish(num);
+    
+    if (input.value !== formatted) {
+      input.value = formatted;
+      input.setSelectionRange(formatted.length, formatted.length);
+    }
+  }
+
+  // ---------- Event Listeners ----------
+  // Payment form
+  openFormBtn.addEventListener('click', function() {
+    resetFormToAdd();
+    formOverlay.classList.add('active');
+  });
+
+  cancelFormBtn.addEventListener('click', closeForm);
+  formOverlay.addEventListener('click', function(e) {
+    if (e.target === formOverlay) {
+      closeForm();
+    }
+  });
+  paymentForm.addEventListener('submit', handleFormSubmit);
+  amountInput.addEventListener('input', handleAmountInput);
+  amountInput.removeAttribute('maxlength');
+  amountInput.addEventListener('paste', function(e) {
+    setTimeout(() => {
+      this.dispatchEvent(new Event('input'));
+    }, 10);
+  });
+
+  // Account form
+  openAccountBtn.addEventListener('click', function() {
+    accountFormOverlay.classList.add('active');
+  });
+  cancelAccountBtn.addEventListener('click', closeAccountForm);
+  accountFormOverlay.addEventListener('click', function(e) {
+    if (e.target === accountFormOverlay) {
+      closeAccountForm();
+    }
+  });
+  accountForm.addEventListener('submit', handleAccountSubmit);
+
+  // Search filters
+  searchInput.addEventListener('input', filterPayments);
+  searchFromAccount.addEventListener('change', filterPayments);
+  searchToAccount.addEventListener('change', filterPayments);
+
+  // ---------- Initialize ----------
+  const formNativePicker = initDatepicker(
+    datePickerBtn, 
+    dateDisplay, 
+    dateInput
+  );
+
+  const searchNativePicker = initDatepicker(
+    dateSearchPicker,
+    dateSearchDisplay,
+    null,
+    (date) => {
+      selectedSearchDate = date;
+      filterPayments();
+    }
+  );
+
+  const today = getTodayShamsi();
+  dateDisplay.textContent = formatShamsiDisplay(today);
+  dateInput.value = today;
+  
+  loadAccounts();
+  loadPayments();
+
+  console.log('🔥 سیستم مدیریت پرداخت با Firebase راه‌اندازی شد');
+</script>
+</body>
+</html>
