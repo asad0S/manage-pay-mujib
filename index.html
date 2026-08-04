@@ -2,23 +2,25 @@
 <html lang="fa" dir="rtl">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>مدیریت پرداخت آنلاین - با حساب‌ها</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>مدیریت پرداخت آنلاین</title>
   <!-- Font Awesome (icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
       box-sizing: border-box;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
     }
     body {
-      background: #f4f7fc;
+      background: #f0f4f9;
       display: flex;
       justify-content: center;
-      align-items: center;
+      align-items: flex-start;
       min-height: 100vh;
-      margin: 20px;
-      padding: 10px;
+      margin: 0;
+      padding: 12px;
     }
     .app-container {
       max-width: 1200px;
@@ -26,12 +28,12 @@
       background: white;
       border-radius: 24px;
       box-shadow: 0 12px 30px rgba(0,0,0,0.1);
-      padding: 25px 30px 35px;
+      padding: 24px 28px 32px;
       transition: all 0.2s;
     }
     h1 {
       font-size: 1.8rem;
-      font-weight: 600;
+      font-weight: 700;
       color: #1e293b;
       display: flex;
       justify-content: space-between;
@@ -39,9 +41,12 @@
       border-bottom: 2px solid #e9edf4;
       padding-bottom: 18px;
       margin-top: 0;
-      margin-bottom: 20px;
+      margin-bottom: 22px;
       flex-wrap: wrap;
-      gap: 15px;
+      gap: 12px;
+    }
+    h1 span {
+      font-size: 1.6rem;
     }
     .header-left {
       display: flex;
@@ -56,7 +61,7 @@
       padding: 12px 24px;
       border-radius: 40px;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -80,7 +85,7 @@
       padding: 12px 28px;
       border-radius: 40px;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: 0.2s;
       box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
@@ -97,7 +102,7 @@
       padding: 12px 28px;
       border-radius: 40px;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
       transition: 0.2s;
     }
@@ -108,10 +113,10 @@
       background: #ef4444;
       border: none;
       color: white;
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
       transition: 0.2s;
       margin-left: 6px;
@@ -124,10 +129,10 @@
       background: #f59e0b;
       border: none;
       color: white;
-      padding: 6px 14px;
+      padding: 8px 16px;
       border-radius: 30px;
-      font-size: 0.85rem;
-      font-weight: 500;
+      font-size: 0.9rem;
+      font-weight: 600;
       cursor: pointer;
       transition: 0.2s;
       margin-left: 6px;
@@ -143,7 +148,7 @@
       padding: 12px 24px;
       border-radius: 40px;
       font-size: 1rem;
-      font-weight: 500;
+      font-weight: 600;
       display: inline-flex;
       align-items: center;
       gap: 10px;
@@ -161,9 +166,9 @@
       background: #f1f5f9;
       border: 1.5px solid #dbe0e8;
       color: #1e293b;
-      padding: 10px 16px;
+      padding: 12px 18px;
       border-radius: 18px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       cursor: pointer;
       transition: 0.2s;
       display: inline-flex;
@@ -188,8 +193,8 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: rgba(0,0,0,0.4);
-      backdrop-filter: blur(4px);
+      background: rgba(0,0,0,0.5);
+      backdrop-filter: blur(5px);
       justify-content: center;
       align-items: center;
       z-index: 1000;
@@ -204,12 +209,14 @@
       padding: 32px 35px;
       max-width: 550px;
       width: 100%;
-      box-shadow: 0 30px 50px rgba(0,0,0,0.25);
-      animation: fadeUp 0.25s ease;
+      max-height: 92vh;
+      overflow-y: auto;
+      box-shadow: 0 30px 50px rgba(0,0,0,0.3);
+      animation: fadeUp 0.3s ease;
     }
     @keyframes fadeUp {
-      0% { opacity: 0.5; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
+      0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
     }
     .form-card h2 {
       font-size: 1.6rem;
@@ -225,17 +232,17 @@
     }
     .form-group label {
       display: block;
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 6px;
       color: #334155;
-      font-size: 0.95rem;
+      font-size: 1rem;
     }
     .form-group input, .form-group textarea, .form-group select {
       width: 100%;
-      padding: 12px 16px;
+      padding: 14px 18px;
       border: 1.5px solid #dbe0e8;
       border-radius: 18px;
-      font-size: 1rem;
+      font-size: 1.05rem;
       background: #fafcff;
       transition: 0.15s;
       outline: none;
@@ -265,33 +272,37 @@
       display: flex;
       justify-content: flex-end;
       gap: 14px;
-      margin-top: 28px;
+      margin-top: 24px;
       border-top: 1px solid #eef2f6;
-      padding-top: 24px;
+      padding-top: 22px;
+    }
+    .form-actions button {
+      padding: 12px 28px;
+      font-size: 1rem;
     }
     /* جستجو و مجموع */
     .search-section {
       display: flex;
-      gap: 15px;
+      gap: 12px;
       flex-wrap: wrap;
       margin-bottom: 20px;
-      padding: 15px;
+      padding: 16px 18px;
       background: #f8fafc;
-      border-radius: 16px;
+      border-radius: 18px;
       align-items: center;
     }
     .search-box {
-      flex: 1;
-      min-width: 180px;
+      flex: 1 1 200px;
+      min-width: 160px;
       display: flex;
       gap: 10px;
       align-items: center;
     }
     .search-box input, .search-box .btn-datepicker, .search-box select {
-      padding: 10px 16px;
+      padding: 12px 16px;
       border: 1.5px solid #dbe0e8;
       border-radius: 18px;
-      font-size: 0.95rem;
+      font-size: 1rem;
       background: white;
       outline: none;
       transition: 0.15s;
@@ -310,21 +321,25 @@
       background: #f8fafc;
       border-color: #2a6df4;
     }
+    .search-box i {
+      font-size: 1.1rem;
+      min-width: 20px;
+    }
     .total-sum {
       background: linear-gradient(135deg, #2a6df4, #1a56d4);
       color: white;
-      padding: 10px 24px;
+      padding: 14px 24px;
       border-radius: 40px;
       font-size: 1.1rem;
-      font-weight: 600;
+      font-weight: 700;
       white-space: nowrap;
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 12px;
       box-shadow: 0 4px 12px rgba(42, 109, 244, 0.3);
     }
     .total-sum span {
-      font-size: 1.3rem;
+      font-size: 1.4rem;
     }
     /* جدول */
     .table-wrapper {
@@ -333,25 +348,31 @@
       border-radius: 18px;
       border: 1px solid #eef2f6;
       background: #fafcff;
+      -webkit-overflow-scrolling: touch;
+      position: relative;
+      min-height: 200px;
     }
     table {
       width: 100%;
       border-collapse: collapse;
       font-size: 0.95rem;
+      min-width: 650px;
     }
     th {
       text-align: right;
-      padding: 18px 16px;
+      padding: 16px 14px;
       background: #f1f5f9;
       color: #1e293b;
-      font-weight: 600;
+      font-weight: 700;
       border-bottom: 2px solid #dce2ec;
+      font-size: 0.9rem;
     }
     td {
-      padding: 16px;
+      padding: 14px 12px;
       border-bottom: 1px solid #eaeef5;
       color: #1e293b;
       vertical-align: middle;
+      font-size: 0.95rem;
     }
     tr:last-child td {
       border-bottom: none;
@@ -359,29 +380,28 @@
     .empty-row td {
       text-align: center;
       color: #94a3b8;
-      padding: 40px 0;
-      font-size: 1rem;
+      padding: 50px 0;
+      font-size: 1.1rem;
     }
     .badge-account {
       background: #dbeafe;
       color: #1e4b7a;
-      padding: 4px 14px;
+      padding: 6px 14px;
       border-radius: 30px;
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
       display: inline-block;
+      white-space: nowrap;
     }
     .badge-account-purple {
       background: #ede9fe;
       color: #5b21b6;
-      padding: 4px 14px;
+      padding: 6px 14px;
       border-radius: 30px;
       font-size: 0.85rem;
-      font-weight: 500;
+      font-weight: 600;
       display: inline-block;
-    }
-    .text-muted {
-      color: #64748b;
+      white-space: nowrap;
     }
     .actions-cell {
       display: flex;
@@ -389,21 +409,121 @@
       flex-wrap: wrap;
       justify-content: flex-start;
     }
-    .amount-display {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      direction: ltr;
-      display: inline-block;
+    .actions-cell button {
+      font-size: 0.85rem;
+      padding: 6px 14px;
     }
-    /* ریسپانسیو */
-    @media (max-width: 700px) {
-      .app-container { padding: 18px; }
-      .form-card { padding: 24px 18px; }
-      .form-row .form-group { flex: 1 1 100%; }
-      .btn-primary, .btn-account { padding: 10px 18px; font-size: 0.9rem; }
-      .actions-cell { flex-direction: column; align-items: flex-start; }
-      .search-section { flex-direction: column; align-items: stretch; }
-      .total-sum { justify-content: center; }
-      .header-left { width: 100%; }
+    /* لودینگ */
+    .loading-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 70px 20px;
+      gap: 25px;
+      min-height: 250px;
+    }
+    .loading-spinner {
+      width: 65px;
+      height: 65px;
+      border: 6px solid #e9edf4;
+      border-top: 6px solid #2a6df4;
+      border-radius: 50%;
+      animation: spin 0.9s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .loading-text {
+      font-size: 1.2rem;
+      color: #475569;
+      font-weight: 600;
+    }
+    .loading-sub-text {
+      font-size: 0.95rem;
+      color: #94a3b8;
+      font-weight: 400;
+    }
+    .loading-hidden {
+      display: none !important;
+    }
+    /* موبایل */
+    @media (max-width: 480px) {
+      body { padding: 6px; }
+      .app-container { padding: 14px 14px 20px; border-radius: 16px; }
+      h1 { 
+        font-size: 1.3rem; 
+        padding-bottom: 14px; 
+        gap: 10px;
+        flex-direction: column;
+        align-items: stretch;
+      }
+      h1 span { font-size: 1.2rem; }
+      .header-left { 
+        width: 100%;
+        gap: 8px;
+      }
+      .header-left button { 
+        font-size: 0.85rem; 
+        padding: 10px 14px; 
+        flex: 1;
+        justify-content: center;
+      }
+      .header-left button i { font-size: 0.9rem; }
+      .form-card { padding: 20px 16px; }
+      .form-card h2 { font-size: 1.3rem; }
+      .form-group input, .form-group textarea, .form-group select {
+        padding: 12px 14px;
+        font-size: 1rem;
+      }
+      .form-actions button { 
+        flex: 1;
+        justify-content: center;
+        padding: 12px 16px;
+        font-size: 0.9rem;
+      }
+      .search-section { padding: 12px; gap: 10px; }
+      .search-box { flex: 1 1 100%; }
+      .search-box input, .search-box select, .search-box .btn-datepicker {
+        font-size: 0.95rem;
+        padding: 10px 14px;
+      }
+      .total-sum { 
+        font-size: 0.95rem; 
+        padding: 10px 16px;
+        white-space: normal;
+        width: 100%;
+        justify-content: center;
+      }
+      .total-sum span { font-size: 1.2rem; }
+      table { font-size: 0.85rem; min-width: 500px; }
+      th { padding: 10px 8px; font-size: 0.8rem; }
+      td { padding: 10px 8px; font-size: 0.85rem; }
+      .badge-account, .badge-account-purple { font-size: 0.75rem; padding: 4px 10px; }
+      .actions-cell button { 
+        font-size: 0.75rem; 
+        padding: 5px 10px; 
+      }
+      .loading-spinner { width: 50px; height: 50px; border-width: 5px; }
+      .loading-text { font-size: 1rem; }
+      .loading-container { padding: 50px 15px; min-height: 180px; }
+    }
+    @media (min-width: 481px) and (max-width: 768px) {
+      .app-container { padding: 18px 20px 25px; }
+      .search-box { flex: 1 1 45%; }
+      .form-row .form-group { flex: 1 1 45%; }
+      h1 { flex-direction: row; flex-wrap: wrap; }
+      .header-left { width: auto; flex: 1; justify-content: flex-end; }
+      .header-left button { flex: none; }
+    }
+    @media (min-width: 769px) {
+      .search-box { flex: 1; }
+      .form-row .form-group { flex: 1 1 45%; }
+      h1 { flex-direction: row; align-items: center; }
+      .header-left { width: auto; }
+      .header-left button { flex: none; }
+      .total-sum { width: auto; }
     }
   </style>
 </head>
@@ -411,40 +531,40 @@
 <div class="app-container">
 
   <h1>
-    <span>📋 مدیریت پرداخت آنلاین</span>
+    <span>📋 مدیریت پرداخت</span>
     <div class="header-left">
       <button class="btn-account" id="openAccountBtn">
         <i class="fas fa-university"></i> افزودن حساب
       </button>
       <button class="btn-primary" id="openFormBtn">
-        <i class="fas fa-plus-circle"></i> ثبت پرداخت +
+        <i class="fas fa-plus-circle"></i> ثبت پرداخت
       </button>
     </div>
   </h1>
 
   <!-- بخش جستجو و مجموع -->
-  <div class="search-section">
+  <div class="search-section" id="searchSection">
     <div class="search-box">
       <i class="fas fa-search" style="color: #94a3b8;"></i>
-      <input type="text" id="searchInput" placeholder="جستجو در پرداخت‌ها..." />
+      <input type="text" id="searchInput" placeholder="جستجو..." />
     </div>
     <div class="search-box">
       <i class="fas fa-arrow-right" style="color: #8b5cf6;"></i>
       <select id="searchFromAccount">
-        <option value="">همه حساب‌های مبدأ</option>
+        <option value="">همه مبدأ</option>
       </select>
     </div>
     <div class="search-box">
       <i class="fas fa-arrow-left" style="color: #8b5cf6;"></i>
       <select id="searchToAccount">
-        <option value="">همه حساب‌های مقصد</option>
+        <option value="">همه مقصد</option>
       </select>
     </div>
     <div class="search-box">
       <i class="fas fa-calendar-alt" style="color: #94a3b8;"></i>
       <button class="btn-datepicker" id="dateSearchPicker">
         <i class="fas fa-calendar-day"></i>
-        <span id="dateSearchDisplay">انتخاب تاریخ</span>
+        <span id="dateSearchDisplay">تاریخ</span>
       </button>
     </div>
     <div class="total-sum">
@@ -454,11 +574,11 @@
   </div>
 
   <!-- جدول نمایش پرداخت‌ها -->
-  <div class="table-wrapper">
+  <div class="table-wrapper" id="tableWrapper">
     <table id="paymentTable">
       <thead>
         <tr>
-          <th>تاریخ (شمسی)</th>
+          <th>تاریخ</th>
           <th>مبلغ (تومان)</th>
           <th>از حساب</th>
           <th>به حساب</th>
@@ -467,7 +587,7 @@
         </tr>
       </thead>
       <tbody id="tableBody">
-        <tr class="empty-row"><td colspan="6">در حال بارگذاری...</td></tr>
+        <!-- لودینگ با جاوااسکریپت نمایش داده می‌شود -->
       </tbody>
     </table>
   </div>
@@ -490,20 +610,20 @@
       <div class="form-group">
         <label for="amountInput"><i class="fas fa-toman-sign"></i> مقدار پرداخت (تومان)</label>
         <input type="text" id="amountInput" placeholder="مبلغ به تومان" style="direction: ltr; text-align: left;" />
-        <small style="color: #6b7a8f; display: block; margin-top: 5px;">اعداد انگلیسی با کاما جدا می‌شوند (مثال: 1,250,000)</small>
+        <small style="color: #6b7a8f; display: block; margin-top: 5px; font-size: 0.85rem;">مثال: 1,250,000</small>
       </div>
 
       <div class="form-row">
         <div class="form-group">
           <label for="fromAccountSelect"><i class="fas fa-arrow-right"></i> از حساب</label>
           <select id="fromAccountSelect" required>
-            <option value="">انتخاب حساب مبدأ</option>
+            <option value="">انتخاب مبدأ</option>
           </select>
         </div>
         <div class="form-group">
           <label for="toAccountSelect"><i class="fas fa-arrow-left"></i> به حساب</label>
           <select id="toAccountSelect" required>
-            <option value="">انتخاب حساب مقصد</option>
+            <option value="">انتخاب مقصد</option>
           </select>
         </div>
       </div>
@@ -515,7 +635,7 @@
 
       <div class="form-actions">
         <button type="button" class="btn-secondary" id="cancelFormBtn">لغو</button>
-        <button type="submit" class="btn-success" id="submitBtn"><i class="fas fa-check"></i> ثبت پرداخت</button>
+        <button type="submit" class="btn-success" id="submitBtn"><i class="fas fa-check"></i> ثبت</button>
       </div>
     </form>
   </div>
@@ -526,7 +646,6 @@
   <div class="form-card">
     <h2 id="accountFormTitle"><i class="fas fa-university" style="color: #8b5cf6;"></i> مدیریت حساب‌ها</h2>
     
-    <!-- فرم افزودن حساب -->
     <form id="accountForm">
       <div class="form-group">
         <label for="accountNameInput"><i class="fas fa-user"></i> نام حساب</label>
@@ -534,26 +653,25 @@
       </div>
       <div class="form-actions" style="border-top: none; padding-top: 0;">
         <button type="button" class="btn-secondary" id="cancelAccountBtn">بستن</button>
-        <button type="submit" class="btn-success" id="accountSubmitBtn"><i class="fas fa-plus"></i> افزودن حساب</button>
+        <button type="submit" class="btn-success" id="accountSubmitBtn"><i class="fas fa-plus"></i> افزودن</button>
       </div>
     </form>
 
-    <!-- جدول حساب‌ها -->
-    <div style="margin-top: 25px; border-top: 2px solid #eef2f6; padding-top: 20px;">
-      <h3 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 15px; color: #1e293b;">
+    <div style="margin-top: 24px; border-top: 2px solid #eef2f6; padding-top: 20px;">
+      <h3 style="font-size: 1.1rem; margin-top: 0; margin-bottom: 14px; color: #1e293b;">
         <i class="fas fa-list"></i> لیست حساب‌ها
       </h3>
-      <div class="table-wrapper" style="border: 1px solid #eef2f6;">
-        <table>
+      <div class="table-wrapper" style="border: 1px solid #eef2f6; border-radius: 14px;">
+        <table style="min-width: 300px;">
           <thead>
             <tr>
-              <th>ردیف</th>
+              <th style="width: 50px;">#</th>
               <th>نام حساب</th>
-              <th>عملیات</th>
+              <th style="width: 130px;">عملیات</th>
             </tr>
           </thead>
           <tbody id="accountTableBody">
-            <tr class="empty-row"><td colspan="3">هیچ حسابی ثبت نشده است</td></tr>
+            <tr class="empty-row"><td colspan="3">هیچ حسابی ثبت نشده</td></tr>
           </tbody>
         </table>
       </div>
@@ -586,7 +704,6 @@
   const accountsRef = ref(database, 'accounts');
 
   // ---------- DOM Elements ----------
-  // Payment form
   const openFormBtn = document.getElementById('openFormBtn');
   const formOverlay = document.getElementById('formOverlay');
   const cancelFormBtn = document.getElementById('cancelFormBtn');
@@ -607,8 +724,8 @@
   const fromAccountSelect = document.getElementById('fromAccountSelect');
   const toAccountSelect = document.getElementById('toAccountSelect');
   const descInput = document.getElementById('descInput');
+  const searchSection = document.getElementById('searchSection');
 
-  // Account form
   const openAccountBtn = document.getElementById('openAccountBtn');
   const accountFormOverlay = document.getElementById('accountFormOverlay');
   const cancelAccountBtn = document.getElementById('cancelAccountBtn');
@@ -625,6 +742,7 @@
   let selectedSearchDate = '';
   let accounts = [];
   let editAccountKey = null;
+  let isLoading = true;
 
   // ---------- Helper Functions ----------
   function getTodayShamsi() {
@@ -687,6 +805,31 @@
     return formatNumberWithCommasPersian(amount);
   }
 
+  // ---------- Show Loading ----------
+  function showLoading() {
+    tableBody.innerHTML = `
+      <tr>
+        <td colspan="6">
+          <div class="loading-container">
+            <div class="loading-spinner"></div>
+            <div class="loading-text">در حال دریافت اطلاعات...</div>
+            <div class="loading-sub-text">لطفاً چند لحظه صبر کنید</div>
+          </div>
+        </td>
+      </tr>
+    `;
+    // مخفی کردن بخش جستجو تا زمانی که داده‌ها لود شوند
+    searchSection.style.opacity = '0.4';
+    searchSection.style.pointerEvents = 'none';
+  }
+
+  // ---------- Hide Loading ----------
+  function hideLoading() {
+    // لودینگ به صورت خودکار با رندر جدول جایگزین می‌شود
+    searchSection.style.opacity = '1';
+    searchSection.style.pointerEvents = 'auto';
+  }
+
   // ---------- Initialize Datepicker ----------
   function initDatepicker(button, displayElement, inputElement, onSelect) {
     const nativeDateInput = document.createElement('input');
@@ -701,7 +844,11 @@
 
     button.addEventListener('click', function(e) {
       e.preventDefault();
-      nativeDateInput.showPicker ? nativeDateInput.showPicker() : nativeDateInput.click();
+      if (nativeDateInput.showPicker) {
+        nativeDateInput.showPicker();
+      } else {
+        nativeDateInput.click();
+      }
     });
 
     nativeDateInput.addEventListener('change', function() {
@@ -756,7 +903,6 @@
           });
         }
       }
-      // Sort accounts by name
       accounts.sort((a, b) => a.name.localeCompare(b.name));
       updateAccountSelects();
       renderAccountTable();
@@ -764,9 +910,8 @@
   }
 
   function updateAccountSelects() {
-    // Update from account select
     const currentFrom = fromAccountSelect.value;
-    fromAccountSelect.innerHTML = '<option value="">انتخاب حساب مبدأ</option>';
+    fromAccountSelect.innerHTML = '<option value="">انتخاب مبدأ</option>';
     accounts.forEach(acc => {
       const option = document.createElement('option');
       option.value = acc.name;
@@ -777,9 +922,8 @@
       fromAccountSelect.value = currentFrom;
     }
 
-    // Update to account select
     const currentTo = toAccountSelect.value;
-    toAccountSelect.innerHTML = '<option value="">انتخاب حساب مقصد</option>';
+    toAccountSelect.innerHTML = '<option value="">انتخاب مقصد</option>';
     accounts.forEach(acc => {
       const option = document.createElement('option');
       option.value = acc.name;
@@ -790,9 +934,8 @@
       toAccountSelect.value = currentTo;
     }
 
-    // Update search selects
     const currentSearchFrom = searchFromAccount.value;
-    searchFromAccount.innerHTML = '<option value="">همه حساب‌های مبدأ</option>';
+    searchFromAccount.innerHTML = '<option value="">همه مبدأ</option>';
     accounts.forEach(acc => {
       const option = document.createElement('option');
       option.value = acc.name;
@@ -804,7 +947,7 @@
     }
 
     const currentSearchTo = searchToAccount.value;
-    searchToAccount.innerHTML = '<option value="">همه حساب‌های مقصد</option>';
+    searchToAccount.innerHTML = '<option value="">همه مقصد</option>';
     accounts.forEach(acc => {
       const option = document.createElement('option');
       option.value = acc.name;
@@ -819,26 +962,25 @@
   function renderAccountTable() {
     accountTableBody.innerHTML = '';
     if (accounts.length === 0) {
-      accountTableBody.innerHTML = `<tr class="empty-row"><td colspan="3">هیچ حسابی ثبت نشده است</td></tr>`;
+      accountTableBody.innerHTML = `<tr class="empty-row"><td colspan="3">هیچ حسابی ثبت نشده</td></tr>`;
       return;
     }
 
     accounts.forEach((acc, index) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
-        <td>${index + 1}</td>
+        <td style="text-align: center;">${index + 1}</td>
         <td><span class="badge-account-purple">${acc.name}</span></td>
         <td>
           <div class="actions-cell">
-            <button class="btn-edit" data-key="${acc.key}"><i class="fas fa-edit"></i> ویرایش</button>
-            <button class="btn-danger" data-key="${acc.key}"><i class="fas fa-trash-alt"></i> حذف</button>
+            <button class="btn-edit" data-key="${acc.key}"><i class="fas fa-edit"></i></button>
+            <button class="btn-danger" data-key="${acc.key}"><i class="fas fa-trash-alt"></i></button>
           </div>
         </td>
       `;
       accountTableBody.appendChild(tr);
     });
 
-    // Attach event listeners
     document.querySelectorAll('#accountTableBody .btn-edit').forEach(btn => {
       btn.addEventListener('click', function() {
         const key = this.dataset.key;
@@ -875,7 +1017,7 @@
       return true;
     } catch (error) {
       console.error('Error adding account:', error);
-      alert('خطا در افزودن حساب. لطفاً دوباره تلاش کنید.');
+      alert('خطا در افزودن حساب.');
       return false;
     }
   }
@@ -890,7 +1032,7 @@
       return true;
     } catch (error) {
       console.error('Error updating account:', error);
-      alert('خطا در بروزرسانی حساب. لطفاً دوباره تلاش کنید.');
+      alert('خطا در بروزرسانی حساب.');
       return false;
     }
   }
@@ -902,7 +1044,7 @@
       return true;
     } catch (error) {
       console.error('Error deleting account:', error);
-      alert('خطا در حذف حساب. لطفاً دوباره تلاش کنید.');
+      alert('خطا در حذف حساب.');
       return false;
     }
   }
@@ -916,14 +1058,13 @@
       return;
     }
 
-    // Check for duplicate
     if (accounts.some(a => a.name === name && a.key !== editAccountKey)) {
       alert('این نام حساب قبلاً ثبت شده است.');
       return;
     }
 
     accountSubmitBtn.disabled = true;
-    accountSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
+    accountSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     let success = false;
     if (editAccountKey !== null) {
@@ -936,7 +1077,7 @@
     if (success) {
       accountNameInput.value = '';
       editAccountKey = null;
-      accountSubmitBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن حساب';
+      accountSubmitBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن';
       accountSubmitBtn.className = 'btn-success';
       accountSubmitBtn.style.background = '';
       accountSubmitBtn.style.boxShadow = '';
@@ -944,7 +1085,7 @@
     } else {
       accountSubmitBtn.innerHTML = editAccountKey !== null ? 
         '<i class="fas fa-save"></i> بروزرسانی' : 
-        '<i class="fas fa-plus"></i> افزودن حساب';
+        '<i class="fas fa-plus"></i> افزودن';
     }
   }
 
@@ -956,6 +1097,7 @@
     if (!data || data.length === 0) {
       tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">هیچ پرداختی یافت نشد</td></tr>`;
       updateTotal(data || []);
+      hideLoading();
       return;
     }
 
@@ -966,29 +1108,29 @@
       const key = item.key;
 
       tr.innerHTML = `
-        <td><span style="font-weight: 500;">${p.date || '—'}</span></td>
-        <td><span style="color: #0b3b5c; font-weight: 600; direction: ltr; display: inline-block;">${formatAmountDisplay(p.amount)}</span></td>
+        <td><span style="font-weight: 600;">${p.date || '—'}</span></td>
+        <td><span style="color: #0b3b5c; font-weight: 700; direction: ltr; display: inline-block; font-size: 1.05rem;">${formatAmountDisplay(p.amount)}</span></td>
         <td><span class="badge-account">${p.fromAccount || '—'}</span></td>
         <td><span class="badge-account" style="background:#e0f2fe;">${p.toAccount || '—'}</span></td>
         <td style="max-width: 150px; word-break: break-word;">${p.description || ''}</td>
         <td>
           <div class="actions-cell">
-            <button class="btn-edit" data-key="${key}"><i class="fas fa-edit"></i> ویرایش</button>
-            <button class="btn-danger" data-key="${key}"><i class="fas fa-trash-alt"></i> حذف</button>
+            <button class="btn-edit" data-key="${key}"><i class="fas fa-edit"></i></button>
+            <button class="btn-danger" data-key="${key}"><i class="fas fa-trash-alt"></i></button>
           </div>
         </td>
       `;
       tableBody.appendChild(tr);
     }
 
-    document.querySelectorAll('.btn-edit').forEach(btn => {
+    document.querySelectorAll('#tableBody .btn-edit').forEach(btn => {
       btn.addEventListener('click', function() {
         const key = this.dataset.key;
         openEditForm(key);
       });
     });
 
-    document.querySelectorAll('.btn-danger').forEach(btn => {
+    document.querySelectorAll('#tableBody .btn-danger').forEach(btn => {
       btn.addEventListener('click', function() {
         const key = this.dataset.key;
         if (confirm('آیا از حذف این پرداخت اطمینان دارید؟')) {
@@ -998,6 +1140,7 @@
     });
 
     updateTotal(data);
+    hideLoading();
   }
 
   function updateTotal(paymentsData) {
@@ -1044,6 +1187,9 @@
   }
 
   function loadPayments() {
+    // نمایش لودینگ قبل از دریافت داده
+    showLoading();
+    
     onValue(paymentsRef, (snapshot) => {
       const data = snapshot.val();
       allPayments = [];
@@ -1057,7 +1203,7 @@
       }
       searchInput.value = '';
       selectedSearchDate = '';
-      dateSearchDisplay.textContent = 'انتخاب تاریخ';
+      dateSearchDisplay.textContent = 'تاریخ';
       searchFromAccount.value = '';
       searchToAccount.value = '';
       filteredPayments = [...allPayments];
@@ -1065,6 +1211,7 @@
     }, (error) => {
       console.error('Error loading payments:', error);
       tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">خطا در اتصال به سرور</td></tr>`;
+      hideLoading();
     });
   }
 
@@ -1078,7 +1225,7 @@
       return true;
     } catch (error) {
       console.error('Error adding payment:', error);
-      alert('خطا در ثبت پرداخت. لطفاً دوباره تلاش کنید.');
+      alert('خطا در ثبت پرداخت.');
       return false;
     }
   }
@@ -1093,7 +1240,7 @@
       return true;
     } catch (error) {
       console.error('Error updating payment:', error);
-      alert('خطا در بروزرسانی. لطفاً دوباره تلاش کنید.');
+      alert('خطا در بروزرسانی.');
       return false;
     }
   }
@@ -1105,7 +1252,7 @@
       return true;
     } catch (error) {
       console.error('Error deleting payment:', error);
-      alert('خطا در حذف. لطفاً دوباره تلاش کنید.');
+      alert('خطا در حذف.');
       return false;
     }
   }
@@ -1125,7 +1272,6 @@
 
     amountInput.value = formatNumberWithCommasEnglish(payment.amount || 0);
     
-    // Set account selects
     if (payment.fromAccount && accounts.some(a => a.name === payment.fromAccount)) {
       fromAccountSelect.value = payment.fromAccount;
     }
@@ -1136,7 +1282,7 @@
     descInput.value = payment.description || '';
 
     formTitle.innerHTML = `<i class="fas fa-edit" style="color: #f59e0b;"></i> ویرایش پرداخت`;
-    submitBtn.innerHTML = `<i class="fas fa-save"></i> بروزرسانی`;
+    submitBtn.innerHTML = '<i class="fas fa-save"></i> بروزرسانی';
     submitBtn.className = 'btn-edit';
     submitBtn.style.background = '#f59e0b';
     submitBtn.style.boxShadow = '0 4px 8px rgba(245, 158, 11, 0.3)';
@@ -1154,7 +1300,7 @@
     toAccountSelect.value = '';
     descInput.value = '';
     formTitle.innerHTML = `<i class="fas fa-wallet" style="color: #2a6df4;"></i> ثبت پرداخت جدید`;
-    submitBtn.innerHTML = `<i class="fas fa-check"></i> ثبت پرداخت`;
+    submitBtn.innerHTML = '<i class="fas fa-check"></i> ثبت';
     submitBtn.className = 'btn-success';
     submitBtn.style.background = '';
     submitBtn.style.boxShadow = '';
@@ -1169,7 +1315,7 @@
     accountFormOverlay.classList.remove('active');
     accountNameInput.value = '';
     editAccountKey = null;
-    accountSubmitBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن حساب';
+    accountSubmitBtn.innerHTML = '<i class="fas fa-plus"></i> افزودن';
     accountSubmitBtn.className = 'btn-success';
     accountSubmitBtn.style.background = '';
     accountSubmitBtn.style.boxShadow = '';
@@ -1190,7 +1336,7 @@
     
     const amountNum = parseAmount(amountRaw);
     if (!amountNum || amountNum <= 0) {
-      alert('لطفاً مبلغ معتبر (تومان) وارد کنید.');
+      alert('لطفاً مبلغ معتبر وارد کنید.');
       return;
     }
     if (!fromVal) { alert('لطفاً "از حساب" را انتخاب کنید.'); return; }
@@ -1209,7 +1355,7 @@
     };
 
     submitBtn.disabled = true;
-    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> در حال ثبت...';
+    submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i>';
 
     let success = false;
     if (editKey !== null) {
@@ -1224,7 +1370,7 @@
     } else {
       submitBtn.innerHTML = editKey !== null ? 
         '<i class="fas fa-save"></i> بروزرسانی' : 
-        '<i class="fas fa-check"></i> ثبت پرداخت';
+        '<i class="fas fa-check"></i> ثبت';
     }
   }
 
@@ -1250,7 +1396,6 @@
   }
 
   // ---------- Event Listeners ----------
-  // Payment form
   openFormBtn.addEventListener('click', function() {
     resetFormToAdd();
     formOverlay.classList.add('active');
@@ -1271,7 +1416,6 @@
     }, 10);
   });
 
-  // Account form
   openAccountBtn.addEventListener('click', function() {
     accountFormOverlay.classList.add('active');
   });
@@ -1283,7 +1427,6 @@
   });
   accountForm.addEventListener('submit', handleAccountSubmit);
 
-  // Search filters
   searchInput.addEventListener('input', filterPayments);
   searchFromAccount.addEventListener('change', filterPayments);
   searchToAccount.addEventListener('change', filterPayments);
@@ -1309,10 +1452,11 @@
   dateDisplay.textContent = formatShamsiDisplay(today);
   dateInput.value = today;
   
+  // بارگذاری حساب‌ها و پرداخت‌ها
   loadAccounts();
   loadPayments();
 
-  console.log('🔥 سیستم مدیریت پرداخت با Firebase راه‌اندازی شد');
+  console.log('🔥 سیستم مدیریت پرداخت راه‌اندازی شد');
 </script>
 </body>
 </html>
