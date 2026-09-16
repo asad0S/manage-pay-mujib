@@ -4,7 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>مدیریت پرداخت آنلاین</title>
-  <!-- Font Awesome (icons) -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <style>
     * {
@@ -23,7 +22,7 @@
       padding: 12px;
     }
     .app-container {
-      max-width: 1200px;
+      max-width: 1300px;
       width: 100%;
       background: white;
       border-radius: 24px;
@@ -325,6 +324,15 @@
       font-size: 1.1rem;
       min-width: 20px;
     }
+    /* دو باکس مجموع */
+    .totals-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      flex-wrap: wrap;
+    }
     .total-sum {
       background: linear-gradient(135deg, #2a6df4, #1a56d4);
       color: white;
@@ -337,8 +345,30 @@
       align-items: center;
       gap: 12px;
       box-shadow: 0 4px 12px rgba(42, 109, 244, 0.3);
+      flex: 1 1 auto;
+      min-width: 200px;
+      justify-content: center;
     }
     .total-sum span {
+      font-size: 1.4rem;
+    }
+    .total-sum-afn {
+      background: linear-gradient(135deg, #f59e0b, #d97706);
+      color: white;
+      padding: 14px 24px;
+      border-radius: 40px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 12px rgba(245, 158, 11, 0.3);
+      flex: 1 1 auto;
+      min-width: 200px;
+      justify-content: center;
+    }
+    .total-sum-afn span {
       font-size: 1.4rem;
     }
     /* جدول */
@@ -356,19 +386,20 @@
       width: 100%;
       border-collapse: collapse;
       font-size: 0.95rem;
-      min-width: 650px;
+      min-width: 850px;
     }
     th {
       text-align: right;
-      padding: 16px 14px;
+      padding: 16px 12px;
       background: #f1f5f9;
       color: #1e293b;
       font-weight: 700;
       border-bottom: 2px solid #dce2ec;
       font-size: 0.9rem;
+      white-space: nowrap;
     }
     td {
-      padding: 14px 12px;
+      padding: 14px 10px;
       border-bottom: 1px solid #eaeef5;
       color: #1e293b;
       vertical-align: middle;
@@ -396,6 +427,16 @@
     .badge-account-purple {
       background: #ede9fe;
       color: #5b21b6;
+      padding: 6px 14px;
+      border-radius: 30px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      display: inline-block;
+      white-space: nowrap;
+    }
+    .badge-afn {
+      background: #fef3c7;
+      color: #92400e;
       padding: 6px 14px;
       border-radius: 30px;
       font-size: 0.85rem;
@@ -445,9 +486,6 @@
       color: #94a3b8;
       font-weight: 400;
     }
-    .loading-hidden {
-      display: none !important;
-    }
     /* موبایل */
     @media (max-width: 480px) {
       body { padding: 6px; }
@@ -489,21 +527,25 @@
         font-size: 0.95rem;
         padding: 10px 14px;
       }
-      .total-sum { 
+      .totals-row {
+        flex-direction: column;
+      }
+      .total-sum, .total-sum-afn { 
         font-size: 0.95rem; 
         padding: 10px 16px;
         white-space: normal;
         width: 100%;
         justify-content: center;
+        min-width: auto;
       }
-      .total-sum span { font-size: 1.2rem; }
-      table { font-size: 0.85rem; min-width: 500px; }
-      th { padding: 10px 8px; font-size: 0.8rem; }
-      td { padding: 10px 8px; font-size: 0.85rem; }
-      .badge-account, .badge-account-purple { font-size: 0.75rem; padding: 4px 10px; }
+      .total-sum span, .total-sum-afn span { font-size: 1.2rem; }
+      table { font-size: 0.85rem; min-width: 700px; }
+      th { padding: 10px 6px; font-size: 0.75rem; }
+      td { padding: 10px 6px; font-size: 0.8rem; }
+      .badge-account, .badge-account-purple, .badge-afn { font-size: 0.7rem; padding: 4px 8px; }
       .actions-cell button { 
-        font-size: 0.75rem; 
-        padding: 5px 10px; 
+        font-size: 0.7rem; 
+        padding: 5px 8px; 
       }
       .loading-spinner { width: 50px; height: 50px; border-width: 5px; }
       .loading-text { font-size: 1rem; }
@@ -523,7 +565,7 @@
       h1 { flex-direction: row; align-items: center; }
       .header-left { width: auto; }
       .header-left button { flex: none; }
-      .total-sum { width: auto; }
+      .total-sum, .total-sum-afn { width: auto; flex: 0 1 auto; }
     }
   </style>
 </head>
@@ -567,9 +609,17 @@
         <span id="dateSearchDisplay">تاریخ</span>
       </button>
     </div>
-    <div class="total-sum">
-      <i class="fas fa-wallet"></i>
-      مجموع: <span id="totalAmount">۰</span> تومان
+
+    <!-- دو باکس مجموع: تومان (چپ) و افغانی (راست) -->
+    <div class="totals-row">
+      <div class="total-sum">
+        <i class="fas fa-wallet"></i>
+        مجموع: <span id="totalAmount">۰</span> تومان
+      </div>
+      <div class="total-sum-afn">
+        <i class="fas fa-money-bill-wave"></i>
+        مجموع: <span id="totalAfnAmount">۰</span> افغانی
+      </div>
     </div>
   </div>
 
@@ -580,6 +630,7 @@
         <tr>
           <th>تاریخ</th>
           <th>مبلغ (تومان)</th>
+          <th>معادل (افغانی)</th>
           <th>از حساب</th>
           <th>به حساب</th>
           <th>توضیحات</th>
@@ -611,6 +662,12 @@
         <label for="amountInput"><i class="fas fa-toman-sign"></i> مقدار پرداخت (تومان)</label>
         <input type="text" id="amountInput" placeholder="مبلغ به تومان" style="direction: ltr; text-align: left;" />
         <small style="color: #6b7a8f; display: block; margin-top: 5px; font-size: 0.85rem;">مثال: 1,250,000</small>
+      </div>
+
+      <div class="form-group">
+        <label for="afnInput"><i class="fas fa-money-bill-wave"></i> معادل افغانی (AFN)</label>
+        <input type="text" id="afnInput" placeholder="مبلغ به افغانی (دستی)" style="direction: ltr; text-align: left;" />
+        <small style="color: #6b7a8f; display: block; margin-top: 5px; font-size: 0.85rem;">این مقدار را خودتان به صورت دستی وارد کنید - مثال: 85,000</small>
       </div>
 
       <div class="form-row">
@@ -681,11 +738,9 @@
 
 <!-- Firebase SDK -->
 <script type="module">
-  // Import Firebase SDK
   import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-app.js";
   import { getDatabase, ref, onValue, push, remove, update, set, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.0/firebase-database.js";
 
-  // Firebase Config
   const firebaseConfig = {
     apiKey: "AIzaSyBSkYRVAvxlLfVG0FPeM0wkiZsjf0zolJ8",
     authDomain: "profile-messenger-fc66d.firebaseapp.com",
@@ -697,7 +752,6 @@
     measurementId: "G-8G4BZ00P49"
   };
 
-  // Initialize Firebase
   const app = initializeApp(firebaseConfig);
   const database = getDatabase(app);
   const paymentsRef = ref(database, 'payments');
@@ -717,10 +771,12 @@
   const dateSearchPicker = document.getElementById('dateSearchPicker');
   const dateSearchDisplay = document.getElementById('dateSearchDisplay');
   const totalAmountSpan = document.getElementById('totalAmount');
+  const totalAfnAmountSpan = document.getElementById('totalAfnAmount');
   const datePickerBtn = document.getElementById('datePickerBtn');
   const dateDisplay = document.getElementById('dateDisplay');
   const dateInput = document.getElementById('dateInput');
   const amountInput = document.getElementById('amountInput');
+  const afnInput = document.getElementById('afnInput');
   const fromAccountSelect = document.getElementById('fromAccountSelect');
   const toAccountSelect = document.getElementById('toAccountSelect');
   const descInput = document.getElementById('descInput');
@@ -742,7 +798,6 @@
   let selectedSearchDate = '';
   let accounts = [];
   let editAccountKey = null;
-  let isLoading = true;
 
   // ---------- Helper Functions ----------
   function getTodayShamsi() {
@@ -805,11 +860,10 @@
     return formatNumberWithCommasPersian(amount);
   }
 
-  // ---------- Show Loading ----------
   function showLoading() {
     tableBody.innerHTML = `
       <tr>
-        <td colspan="6">
+        <td colspan="7">
           <div class="loading-container">
             <div class="loading-spinner"></div>
             <div class="loading-text">در حال دریافت اطلاعات...</div>
@@ -818,14 +872,11 @@
         </td>
       </tr>
     `;
-    // مخفی کردن بخش جستجو تا زمانی که داده‌ها لود شوند
     searchSection.style.opacity = '0.4';
     searchSection.style.pointerEvents = 'none';
   }
 
-  // ---------- Hide Loading ----------
   function hideLoading() {
-    // لودینگ به صورت خودکار با رندر جدول جایگزین می‌شود
     searchSection.style.opacity = '1';
     searchSection.style.pointerEvents = 'auto';
   }
@@ -1049,7 +1100,6 @@
     }
   }
 
-  // ---------- Account Form Submit ----------
   async function handleAccountSubmit(event) {
     event.preventDefault();
     const name = accountNameInput.value.trim();
@@ -1095,7 +1145,7 @@
     tableBody.innerHTML = '';
     
     if (!data || data.length === 0) {
-      tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">هیچ پرداختی یافت نشد</td></tr>`;
+      tableBody.innerHTML = `<tr class="empty-row"><td colspan="7">هیچ پرداختی یافت نشد</td></tr>`;
       updateTotal(data || []);
       hideLoading();
       return;
@@ -1110,9 +1160,10 @@
       tr.innerHTML = `
         <td><span style="font-weight: 600;">${p.date || '—'}</span></td>
         <td><span style="color: #0b3b5c; font-weight: 700; direction: ltr; display: inline-block; font-size: 1.05rem;">${formatAmountDisplay(p.amount)}</span></td>
+        <td><span class="badge-afn">${p.afnEquivalent ? formatAmountDisplay(p.afnEquivalent) : '—'} AFN</span></td>
         <td><span class="badge-account">${p.fromAccount || '—'}</span></td>
         <td><span class="badge-account" style="background:#e0f2fe;">${p.toAccount || '—'}</span></td>
-        <td style="max-width: 150px; word-break: break-word;">${p.description || ''}</td>
+        <td style="max-width: 130px; word-break: break-word;">${p.description || ''}</td>
         <td>
           <div class="actions-cell">
             <button class="btn-edit" data-key="${key}"><i class="fas fa-edit"></i></button>
@@ -1144,8 +1195,13 @@
   }
 
   function updateTotal(paymentsData) {
-    const total = paymentsData.reduce((sum, item) => sum + (item.data.amount || 0), 0);
-    totalAmountSpan.textContent = formatNumberWithCommasPersian(total);
+    // مجموع تومان
+    const totalToman = paymentsData.reduce((sum, item) => sum + (item.data.amount || 0), 0);
+    totalAmountSpan.textContent = formatNumberWithCommasPersian(totalToman);
+
+    // مجموع افغانی
+    const totalAfn = paymentsData.reduce((sum, item) => sum + (item.data.afnEquivalent || 0), 0);
+    totalAfnAmountSpan.textContent = formatNumberWithCommasPersian(totalAfn);
   }
 
   function filterPayments() {
@@ -1187,7 +1243,6 @@
   }
 
   function loadPayments() {
-    // نمایش لودینگ قبل از دریافت داده
     showLoading();
     
     onValue(paymentsRef, (snapshot) => {
@@ -1210,7 +1265,7 @@
       renderTable(filteredPayments);
     }, (error) => {
       console.error('Error loading payments:', error);
-      tableBody.innerHTML = `<tr class="empty-row"><td colspan="6">خطا در اتصال به سرور</td></tr>`;
+      tableBody.innerHTML = `<tr class="empty-row"><td colspan="7">خطا در اتصال به سرور</td></tr>`;
       hideLoading();
     });
   }
@@ -1271,6 +1326,7 @@
     }
 
     amountInput.value = formatNumberWithCommasEnglish(payment.amount || 0);
+    afnInput.value = payment.afnEquivalent ? formatNumberWithCommasEnglish(payment.afnEquivalent) : '';
     
     if (payment.fromAccount && accounts.some(a => a.name === payment.fromAccount)) {
       fromAccountSelect.value = payment.fromAccount;
@@ -1296,6 +1352,7 @@
     dateDisplay.textContent = formatShamsiDisplay(today);
     dateInput.value = today;
     amountInput.value = '';
+    afnInput.value = '';
     fromAccountSelect.value = '';
     toAccountSelect.value = '';
     descInput.value = '';
@@ -1322,12 +1379,12 @@
     accountFormTitle.innerHTML = '<i class="fas fa-university" style="color: #8b5cf6;"></i> مدیریت حساب‌ها';
   }
 
-  // ---------- Form Submit ----------
   async function handleFormSubmit(event) {
     event.preventDefault();
 
     const dateVal = dateInput.value.trim();
     const amountRaw = amountInput.value.trim();
+    const afnRaw = afnInput.value.trim();
     const fromVal = fromAccountSelect.value;
     const toVal = toAccountSelect.value;
     const descVal = descInput.value.trim();
@@ -1336,7 +1393,7 @@
     
     const amountNum = parseAmount(amountRaw);
     if (!amountNum || amountNum <= 0) {
-      alert('لطفاً مبلغ معتبر وارد کنید.');
+      alert('لطفاً مبلغ معتبر (تومان) وارد کنید.');
       return;
     }
     if (!fromVal) { alert('لطفاً "از حساب" را انتخاب کنید.'); return; }
@@ -1346,9 +1403,12 @@
       return;
     }
 
+    const afnNum = afnRaw ? parseAmount(afnRaw) : 0;
+
     const paymentData = {
       date: dateVal,
       amount: amountNum,
+      afnEquivalent: afnNum,
       fromAccount: fromVal,
       toAccount: toVal,
       description: descVal,
@@ -1374,8 +1434,28 @@
     }
   }
 
-  // ---------- Amount Input Handler ----------
+  // ---------- Amount Input Handlers ----------
   function handleAmountInput(e) {
+    const input = e.target;
+    let rawValue = input.value;
+    
+    const persianToEnglishMap = {
+      '۰': '0', '۱': '1', '۲': '2', '۳': '3', '۴': '4',
+      '۵': '5', '۶': '6', '۷': '7', '۸': '8', '۹': '9'
+    };
+    rawValue = rawValue.replace(/[۰-۹]/g, m => persianToEnglishMap[m]);
+    
+    const digitsOnly = rawValue.replace(/[^\d]/g, '');
+    const num = parseInt(digitsOnly, 10) || 0;
+    const formatted = formatNumberWithCommasEnglish(num);
+    
+    if (input.value !== formatted) {
+      input.value = formatted;
+      input.setSelectionRange(formatted.length, formatted.length);
+    }
+  }
+
+  function handleAfnInput(e) {
     const input = e.target;
     let rawValue = input.value;
     
@@ -1408,9 +1488,18 @@
     }
   });
   paymentForm.addEventListener('submit', handleFormSubmit);
+  
   amountInput.addEventListener('input', handleAmountInput);
   amountInput.removeAttribute('maxlength');
   amountInput.addEventListener('paste', function(e) {
+    setTimeout(() => {
+      this.dispatchEvent(new Event('input'));
+    }, 10);
+  });
+
+  afnInput.addEventListener('input', handleAfnInput);
+  afnInput.removeAttribute('maxlength');
+  afnInput.addEventListener('paste', function(e) {
     setTimeout(() => {
       this.dispatchEvent(new Event('input'));
     }, 10);
@@ -1452,7 +1541,6 @@
   dateDisplay.textContent = formatShamsiDisplay(today);
   dateInput.value = today;
   
-  // بارگذاری حساب‌ها و پرداخت‌ها
   loadAccounts();
   loadPayments();
 
